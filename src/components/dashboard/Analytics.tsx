@@ -11,7 +11,7 @@ import {
   FaChartPie,
 } from "react-icons/fa"; // Import icons
 import ReviewsWidget from "./ReviewsList";
-import SuggestionsByCategoryIcons from "./SentimentChart";
+import SuggestionsByCategoryChart from "./SentimentChart";
 
 const Analytics = () => {
   const minDate = new Date("2025-01-01");
@@ -31,6 +31,11 @@ const Analytics = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen">
+      <div>
+        <h1 className="italic text-center text-red-700">
+          THIS IS JUST DEMO NOT ACTUAL DATA BUT HOW IT GOING TO LOOK LIKE!
+        </h1>
+      </div>
       <div className="container mx-auto p-8">
         {/* Header */}
         <div className="mb-8 flex flex-col sm:flex-row items-center justify-between">
@@ -81,7 +86,7 @@ const Analytics = () => {
           <div className="bg-white lg:col-span-1 rounded-lg shadow-md">
             <ReviewsWidget />
           </div>
-          
+
           {/* Bar Chart */}
           <div className="bg-white lg:col-span-2 p-6 rounded-lg shadow-md">
             <div className="flex items-center mb-4">
@@ -92,6 +97,13 @@ const Analytics = () => {
             </div>
             <BarChart data={filteredData} />
           </div>
+        </div>
+
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold text-blue-800 mb-4">
+            Improvement Suggestions Overview
+          </h2>
+          <SuggestionsByCategoryChart />
         </div>
       </div>
     </div>

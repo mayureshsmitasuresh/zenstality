@@ -836,11 +836,7 @@ export const fakeSuggestions = [
     category: "Food & Beverage",
     suggestion: "Offer a kids' menu in the restaurant.",
   },
-  {
-    id: 25,
-    category: "Location",
-    suggestion: "Provide maps and information about public transportation.",
-  },
+  
   {
     id: 26,
     category: "Staff",
@@ -884,11 +880,7 @@ export const fakeSuggestions = [
     category: "Food & Beverage",
     suggestion: "Offer a 24-hour snack and beverage station.",
   },
-  {
-    id: 35,
-    category: "Location",
-    suggestion: "Provide a walking or jogging trail map for guests.",
-  },
+  
   {
     id: 36,
     category: "Staff",
@@ -904,38 +896,14 @@ export const fakeSuggestions = [
     category: "Technology",
     suggestion: "Install keyless entry systems for rooms.",
   },
-  { id: 39, category: "Parking", suggestion: "Offer a car wash service." },
-  {
-    id: 40,
-    category: "Events",
-    suggestion: "Host cooking classes or wine tasting events.",
-  },
+  
   {
     id: 41,
     category: "Service",
     suggestion: "Offer a mobile app for guests to manage their stay.",
   },
-  {
-    id: 42,
-    category: "Amenities",
-    suggestion: "Add a kids' play area or game room.",
-  },
-  {
-    id: 43,
-    category: "Cleanliness",
-    suggestion:
-      "Implement a system for tracking and reporting lost and found items.",
-  },
-  {
-    id: 44,
-    category: "Food & Beverage",
-    suggestion: "Offer a picnic basket for guests to take on outings.",
-  },
-  {
-    id: 45,
-    category: "Location",
-    suggestion: "Provide a list of recommended local restaurants and cafes.",
-  },
+  
+  
   {
     id: 46,
     category: "Staff",
@@ -951,16 +919,8 @@ export const fakeSuggestions = [
     category: "Technology",
     suggestion: "Install voice-activated assistants in rooms.",
   },
-  {
-    id: 49,
-    category: "Parking",
-    suggestion: "Offer a shuttle service to the airport.",
-  },
-  {
-    id: 50,
-    category: "Events",
-    suggestion: "Host seasonal events or holiday celebrations.",
-  },
+ 
+  
 ];
 
 export const fakeSentimentsByDay = [

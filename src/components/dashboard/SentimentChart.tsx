@@ -1,54 +1,102 @@
 "use client";
 
-import { useState } from "react";
-import { fakeSuggestions } from "../../data/fakeData";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import React, { useEffect, useRef } from "react";
+import { Chart, ChartOptions, ChartTypeRegistry } from "chart.js/auto";
+import { fakeSuggestions } from "../../data/fakeData"; // Assuming fakeData.ts exists at this path
 
-interface Suggestion {
-  id: number;
-  category: string;
-  suggestion: string;
+interface CategoryCounts {
+  [category: string]: number;
 }
 
-const AccordionSuggestions = () => {
-  const categories: string[] = [...new Set(fakeSuggestions.map((s) => s.category))];
-  const [openCategories, setOpenCategories] = useState<{
-    [key: string]: boolean;
-  }>({});
+const SuggestionsByCategoryChart = () => {
+  const chartRef = useRef<HTMLCanvasElement>(null);
+  const chartInstance = useRef<Chart<
+    keyof ChartTypeRegistry,
+    number[],
+    string
+  > | null>(null);
 
-  const toggleCategory = (category: string) => {
-    setOpenCategories({
-      ...openCategories,
-      [category]: !openCategories[category],
-    });
-  };
+  useEffect(() => {
+    if (chartRef.current) {
+      const categoryCounts: CategoryCounts = fakeSuggestions.reduce(
+        (acc: any, suggestion: any) => {
+          acc[suggestion.category] = (acc[suggestion.category] || 0) + 1;
+          return acc;
+        },
+        {}
+      );
+
+      const labels = Object.keys(categoryCounts);
+      const data = Object.values(categoryCounts);
+
+      const chartOptions: ChartOptions<"bar"> = {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: "Number of Suggestions",
+            },
+          },
+          x: {
+            title: {
+              display: true,
+              text: "Category",
+            },
+          },
+        },
+        plugins: {
+          legend: {
+            display: false,
+          },
+          title: {
+            display: true,
+            text: "Tailored AI suggestions on what your customers are thinking about you to improve!",
+            font: {
+              size: 16,
+              weight: "bold",
+            },
+          },
+        },
+      };
+
+      if (chartInstance.current) {
+        chartInstance.current.destroy();
+      }
+
+      chartInstance.current = new Chart(chartRef.current, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Suggestions",
+              data: data,
+              backgroundColor: "rgba(54, 162, 235, 0.7)",
+              borderColor: "rgba(54, 162, 235, 1)",
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: chartOptions,
+      });
+    }
+
+    return () => {
+      if (chartInstance.current) {
+        chartInstance.current.destroy();
+        chartInstance.current = null;
+      }
+    };
+  }, []);
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      {categories.map((category) => (
-        <div key={category} className="mb-4">
-          <div
-            className="flex justify-between items-center cursor-pointer p-3 bg-gray-100 rounded-md"
-            onClick={() => toggleCategory(category)}
-          >
-            <h3 className="font-semibold">{category}</h3>
-            {openCategories[category] ? <FaChevronUp /> : <FaChevronDown />}
-          </div>
-          {openCategories[category] && (
-            <ul className="mt-2 list-disc list-inside text-gray-700">
-              {fakeSuggestions
-                .filter((s) => s.category === category)
-                .map((suggestion) => (
-                  <li key={suggestion.id} className="mb-1">
-                    {suggestion.suggestion}
-                  </li>
-                ))}
-            </ul>
-          )}
-        </div>
-      ))}
+    <div className="bg-white rounded-md shadow-md p-6">
+      <canvas ref={chartRef} style={{ width: "100%", height: "300px" }} />
     </div>
   );
 };
 
-export default AccordionSuggestions;
+export default SuggestionsByCategoryChart;
